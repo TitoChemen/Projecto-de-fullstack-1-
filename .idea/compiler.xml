@@ -3,6 +3,12 @@
   <component name="CompilerConfiguration">
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="Api-Gateway" />
+      </profile>
       <profile name="Annotation profile for usuario-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
@@ -15,6 +21,7 @@
         <module name="descuentos-service" />
         <module name="pagos-service" />
         <module name="facturaciones-service" />
+        <module name="Eureka-Server" />
         <module name="transporte-service" />
         <module name="inventario-service" />
         <module name="carrito-service" />
@@ -23,6 +30,8 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Api-Gateway" options="-parameters" />
+      <module name="Eureka-Server" options="-parameters" />
       <module name="carrito-service" options="-parameters" />
       <module name="descuentos-service" options="-parameters" />
       <module name="facturaciones-service" options="-parameters" />

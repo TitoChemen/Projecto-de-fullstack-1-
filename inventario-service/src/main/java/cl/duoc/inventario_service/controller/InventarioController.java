@@ -22,18 +22,20 @@ public class InventarioController {
         return ResponseEntity.ok(inventarioService.findAll());
     }
 
-    //este es el endpoint q llamara la api de carrito por feign
-    @GetMapping
+    // ARREGLO AQUÍ: Agregamos la ruta con las variables {id} y {cantidad}
+    @GetMapping("/validar/{id}/{cantidad}")
     public ResponseEntity<InventarioDTO> validarStock(
             @PathVariable Long id,
             @PathVariable int cantidad){
-        InventarioDTO resultado = inventarioService.procesarInventario(id,cantidad);
+
+        InventarioDTO resultado = inventarioService.procesarInventario(id, cantidad);
 
         if (resultado == null){
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(resultado);
     }
+
     @PostMapping
     public ResponseEntity<Inventario> crear(@RequestBody Inventario inventario){
         return new ResponseEntity<>(inventarioService.save(inventario), HttpStatus.CREATED);

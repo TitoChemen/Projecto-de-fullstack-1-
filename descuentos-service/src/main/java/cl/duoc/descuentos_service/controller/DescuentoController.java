@@ -18,15 +18,18 @@ public class DescuentoController {
     public ResponseEntity<?> listar(){
         return ResponseEntity.ok(descuentoService.findAll());
     }
-    @GetMapping
+
+    // ARREGLO AQUÍ: Agregamos el /{id} para que no choque con listar()
+    @GetMapping("/{id}")
     public ResponseEntity<?> buscarPorId(@PathVariable Long id){
         DescuentoDTO descuento = descuentoService.findById(id);
         if (descuento == null) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(descuento);
     }
+
     @PostMapping
     public ResponseEntity<?> registrar(@RequestBody Descuento d){
-        Descuento descuentoNuevo= descuentoService.save(d);
+        Descuento descuentoNuevo = descuentoService.save(d);
         return new ResponseEntity<>(descuentoNuevo, HttpStatus.CREATED);
     }
 
@@ -36,7 +39,8 @@ public class DescuentoController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping
+    // ARREGLO AQUÍ TAMBIÉN: Te faltaba el /{id} en el PutMapping
+    @PutMapping("/{id}")
     public ResponseEntity<?> actualizar(@PathVariable Long id, @RequestBody Descuento descuento){
         Descuento descuentoActualizado = descuentoService.update(id, descuento);
         if (descuentoActualizado == null) return ResponseEntity.notFound().build();

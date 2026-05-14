@@ -29,16 +29,22 @@ public class FacturacionService {
         return facturacionRepository.save(f);
     }
 
-    public void  delete(Long id){
+    public void delete(Long id){
         facturacionRepository.deleteById(id);
     }
 
     public Facturacion update(Long id, Facturacion facturacion){
-        Facturacion totalPago = facturacionRepository.findById(id).orElse(null);
-        if (totalPago == null) return null;
-        totalPago.setNeto(facturacion.getNeto());
-        totalPago.setTotal(facturacion.getTotal());
+        // Buscamos la factura existente
+        Facturacion facturaExistente = facturacionRepository.findById(id).orElse(null);
 
-        return facturacionRepository.save(totalPago);
+        if (facturaExistente == null) return null;
+
+        // Seteamos los campos que de verdad existen en tu modelo
+        facturaExistente.setMonto(facturacion.getMonto());
+        facturaExistente.setIdPago(facturacion.getIdPago());
+        facturaExistente.setNroBoleta(facturacion.getNroBoleta());
+        facturaExistente.setFecha(facturacion.getFecha());
+
+        return facturacionRepository.save(facturaExistente);
     }
 }

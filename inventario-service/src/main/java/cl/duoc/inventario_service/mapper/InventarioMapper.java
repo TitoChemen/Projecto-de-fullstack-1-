@@ -8,15 +8,16 @@ import org.springframework.stereotype.Component;
 public class InventarioMapper {
 
     public InventarioDTO toDTO(Inventario inventario, int cantidad) {
+        if (inventario == null) return null;
+
         InventarioDTO dto = new InventarioDTO();
 
-        dto.setIdCarrito(inventario.getIdCarrito());
-        dto.setCantidadPedida(cantidad);
-
-        //Juntamos las variables
-        dto.setInfoUbicacion(inventario.getEstadoStock() + "unidades disponibles en el " + inventario.getPasilloBodega());
-
-        dto.setEstadoLogisitco("[" + inventario.getEstadoStock().toUpperCase() + "] - Procesado por Inventario");
+        dto.setId(inventario.getId());
+        dto.setNombre("Producto Carrito: " + inventario.getIdCarrito());
+        dto.setStock(inventario.getStockDisponible());
+        dto.setCantidadPedida(cantidad); // <--- Aquí guardamos lo que llega al Service
+        dto.setPasillo(inventario.getPasilloBodega());
+        dto.setEstado(inventario.getEstadoStock());
 
         return dto;
     }

@@ -6,10 +6,16 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class FacturacionMapper {
-    public FacturacionDTO toDTO(Facturacion facturacion){
+    public FacturacionDTO toDTO(Facturacion facturacion) {
         if (facturacion == null) return null;
+
         FacturacionDTO dto = new FacturacionDTO();
-        dto.setMontoFinal(facturacion.getTotal() + facturacion.getIva() + facturacion.getNeto());
+
+        dto.setIdPago(facturacion.getIdPago());
+        dto.setMonto(facturacion.getMonto());
+
+        dto.setDetalle("Boleta Nro: " + facturacion.getNroBoleta() + " - Fecha: " + facturacion.getFecha());
+
         return dto;
     }
 }

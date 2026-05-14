@@ -14,12 +14,13 @@ public class FacturaController {
     @Autowired
     private FacturacionService facturacionService;
 
-
     @GetMapping
     public ResponseEntity<?> listar(){
         return ResponseEntity.ok(facturacionService.findAll());
     }
-    @GetMapping
+
+    // ARREGLO 1: Agregamos el /{id}
+    @GetMapping("/{id}")
     public ResponseEntity<?> buscarPorId(@PathVariable Long id){
         FacturacionDTO facturacion = facturacionService.findById(id);
         if (facturacion == null) return ResponseEntity.notFound().build();
@@ -38,7 +39,9 @@ public class FacturaController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping
+    // ARREGLO 2: Cambiamos a PutMapping y agregamos /{id}
+    @PutMapping("/{id}")
+    // ARREGLO 3: Agregamos @PathVariable
     public ResponseEntity<?> actualizar(@PathVariable Long id, @RequestBody Facturacion facturacion){
         Facturacion facturaActualizada = facturacionService.update(id, facturacion);
         if (facturaActualizada == null) return ResponseEntity.notFound().build();

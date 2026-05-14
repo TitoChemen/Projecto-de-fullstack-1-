@@ -8,4 +8,5 @@ public class InventarioDTO {
     private int stock; // Cambia 'cantidadPedida' por lo que viene de la API
     private String pasillo;
     private String estado;
+    private int cantidadPedida; // <--- Agregamos este para que el Service no llore
 }
