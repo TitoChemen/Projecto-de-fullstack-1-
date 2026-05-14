@@ -16,8 +16,9 @@ public class Facturacion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String nroBoleta;
-    private Integer neto;
-    private Integer iva;
-    private Integer total;
+
+    private Long idPago;
+    private Double monto;
+    private String nroBoleta; // Esto lo puedes generar al azar con un UUID
+    private String fecha;
 }

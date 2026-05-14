@@ -1,7 +1,6 @@
-package cl.duoc.descuentos_service.dto;
+package cl.duoc.pagos_service.dto;
 
 import lombok.Data;
-
 @Data
 public class DescuentoDTO {
     private String codigoPromocional;
@@ -12,3 +11,4 @@ public class DescuentoDTO {
     private Long montoDescuento;
     private Long montoFinal;
 }
+
