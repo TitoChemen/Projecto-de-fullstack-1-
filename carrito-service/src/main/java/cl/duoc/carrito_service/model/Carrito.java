@@ -18,4 +18,5 @@ public class Carrito {
     private int precioUnitario;
     @Column(name = "usuario_id")
     private Long IdUsuario;
+
 }
