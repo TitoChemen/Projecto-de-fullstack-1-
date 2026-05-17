@@ -7,7 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 @Component
-public class DataLoader  implements CommandLineRunner {
+public class DataLoader implements CommandLineRunner {
 
     @Autowired
     private CarritoRepository carritoRepository;

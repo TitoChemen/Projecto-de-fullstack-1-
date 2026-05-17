@@ -3,6 +3,7 @@ package cl.duoc.descuentos_service.controller;
 import cl.duoc.descuentos_service.dto.DescuentoDTO;
 import cl.duoc.descuentos_service.model.Descuento;
 import cl.duoc.descuentos_service.service.DescuentoService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +29,7 @@ public class DescuentoController {
     }
 
     @PostMapping
-    public ResponseEntity<?> registrar(@RequestBody Descuento d){
+    public ResponseEntity<?> registrar(@Valid @RequestBody Descuento d){
         Descuento descuentoNuevo = descuentoService.save(d);
         return new ResponseEntity<>(descuentoNuevo, HttpStatus.CREATED);
     }
@@ -41,7 +42,7 @@ public class DescuentoController {
 
     // ARREGLO AQUÍ TAMBIÉN: Te faltaba el /{id} en el PutMapping
     @PutMapping("/{id}")
-    public ResponseEntity<?> actualizar(@PathVariable Long id, @RequestBody Descuento descuento){
+    public ResponseEntity<?> actualizar(@PathVariable Long id, @Valid @RequestBody Descuento descuento){
         Descuento descuentoActualizado = descuentoService.update(id, descuento);
         if (descuentoActualizado == null) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(descuentoActualizado);

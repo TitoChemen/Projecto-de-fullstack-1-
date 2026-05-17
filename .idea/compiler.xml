@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Api-Gateway" />
+        <module name="config-server" />
       </profile>
       <profile name="Annotation profile for usuario-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -33,6 +34,7 @@
       <module name="Api-Gateway" options="-parameters" />
       <module name="Eureka-Server" options="-parameters" />
       <module name="carrito-service" options="-parameters" />
+      <module name="config-server" options="-parameters" />
       <module name="descuentos-service" options="-parameters" />
       <module name="facturaciones-service" options="-parameters" />
       <module name="inventario-service" options="-parameters" />

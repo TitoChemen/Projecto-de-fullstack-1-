@@ -22,5 +22,5 @@ public class Transporte {
     private String empresaTransporte;
     private String rutDestinatario;
     private String direcDestino;
-    private LocalDate fechaEntregaAprox;
+    private String fechaEntregaAprox;
 }
