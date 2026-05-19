@@ -16,9 +16,9 @@ public class DataLoader implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         if (carritoRepository.count()== 0){
-            Carrito c1 = new Carrito(null,"8465S",5,25000,null);
-            Carrito c2 = new Carrito(null,"3255S",7,75000,null);
-            Carrito c3 = new Carrito(null,"4235S",6,85000,null);
+            Carrito c1 = new Carrito(null,"8465S",5,25000,1L);
+            Carrito c2 = new Carrito(null,"3255S",7,75000,2L);
+            Carrito c3 = new Carrito(null,"4235S",6,85000,1L);
 
             carritoRepository.save(c1);
             carritoRepository.save(c2);
