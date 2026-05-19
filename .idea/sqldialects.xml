@@ -11,10 +11,10 @@
     <file url="file://$PROJECT_DIR$/inventario-service/src/main/resources/migration/V2__datos_de_prueba.sql" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/notificaciones-service/src/main/resources/migration/V1__creacion_tabla_notificaciones.sql" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/notificaciones-service/src/main/resources/migration/V2__datos_de_prueba.sql" dialect="GenericSQL" />
-    <file url="file://$PROJECT_DIR$/pagos-service/src/main/resources/migration/V1__creacion_tabla_pagos.sql" dialect="GenericSQL" />
-    <file url="file://$PROJECT_DIR$/pagos-service/src/main/resources/migration/V2__datos_de_prueba.sql" dialect="GenericSQL" />
-    <file url="file://$PROJECT_DIR$/transporte-service/src/main/resources/migration/V1__creacion_tabla_transpotes.sql" dialect="GenericSQL" />
-    <file url="file://$PROJECT_DIR$/transporte-service/src/main/resources/migration/V2__datos_de_prueba.sql" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/pagos-service/src/main/resources/db.migration/V1__creacion_tabla_pagos.sql" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/pagos-service/src/main/resources/db.migration/V2__datos_de_prueba.sql" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/transporte-service/src/main/resources/db.migration/V1__creacion_tabla_transpotes.sql" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/transporte-service/src/main/resources/db.migration/V2__datos_de_prueba.sql" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/usuario-service/src/main/resources/db.migration/V1__creacion_tabla_usuarios.sql" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/usuario-service/src/main/resources/db.migration/V2__datos_de_prueba.sql" dialect="GenericSQL" />
   </component>
