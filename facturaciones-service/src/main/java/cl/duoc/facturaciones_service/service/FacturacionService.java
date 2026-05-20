@@ -26,6 +26,14 @@ public class FacturacionService {
     }
 
     public Facturacion save(Facturacion f){
+        // Si no llega número de boleta, lo generamos al azar
+        if (f.getNroBoleta() == null) {
+            f.setNroBoleta("BOL-" + java.util.UUID.randomUUID().toString().substring(0, 8).toUpperCase());
+        }
+        // Si no llega fecha, ponemos la actual (formato simple)
+        if (f.getFecha() == null) {
+            f.setFecha(java.time.LocalDate.now().toString());
+        }
         return facturacionRepository.save(f);
     }
 

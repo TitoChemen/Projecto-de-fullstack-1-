@@ -7,5 +7,4 @@ public class NotificacionDTO {
     private String codSeguimiento;
     private String estadoEnv;
     private String emailNotificacion;
-    // Opcional: private String rastreo;
 }

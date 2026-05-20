@@ -3,6 +3,7 @@ package cl.duoc.facturaciones_service.controller;
 import cl.duoc.facturaciones_service.dto.FacturacionDTO;
 import cl.duoc.facturaciones_service.model.Facturacion;
 import cl.duoc.facturaciones_service.service.FacturacionService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +29,7 @@ public class FacturaController {
     }
 
     @PostMapping
-    public ResponseEntity<?> registro(@RequestBody Facturacion f){
+    public ResponseEntity<?> registro(@Valid @RequestBody Facturacion f){ // ¡Aquí está el @Valid!
         Facturacion facturaNueva = facturacionService.save(f);
         return new ResponseEntity<>(facturaNueva, HttpStatus.CREATED);
     }

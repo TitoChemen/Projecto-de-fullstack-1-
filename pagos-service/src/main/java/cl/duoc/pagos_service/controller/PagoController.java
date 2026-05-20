@@ -3,6 +3,7 @@ package cl.duoc.pagos_service.controller;
 import cl.duoc.pagos_service.dto.PagoDTO;
 import cl.duoc.pagos_service.model.Pago;
 import cl.duoc.pagos_service.service.PagoService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,7 @@ public class PagoController {
     }
 
     @PostMapping
-    public ResponseEntity<?> registrar(@RequestBody Pago pago){
+    public ResponseEntity<?> registrar(@Valid @RequestBody Pago pago){
         Pago pagoNuevo = pagoService.save(pago);
         return new ResponseEntity<>(pagoNuevo, HttpStatus.CREATED);
     }

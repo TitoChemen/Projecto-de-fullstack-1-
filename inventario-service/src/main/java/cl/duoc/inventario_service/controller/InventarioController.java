@@ -3,13 +3,13 @@ package cl.duoc.inventario_service.controller;
 import cl.duoc.inventario_service.dto.InventarioDTO;
 import cl.duoc.inventario_service.model.Inventario;
 import cl.duoc.inventario_service.service.InventarioService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 @RestController
 @RequestMapping("/api/v1/inventario")
 public class InventarioController {
@@ -22,22 +22,18 @@ public class InventarioController {
         return ResponseEntity.ok(inventarioService.findAll());
     }
 
-    // ARREGLO AQUÍ: Agregamos la ruta con las variables {id} y {cantidad}
-    @GetMapping("/validar/{id}/{cantidad}")
-    public ResponseEntity<InventarioDTO> validarStock(
-            @PathVariable Long id,
-            @PathVariable int cantidad){
+    @GetMapping("/{codigo}")
+    public ResponseEntity<InventarioDTO> buscarPorCodigo(
+            @PathVariable String codigo,
+            @RequestParam(value = "cantidad", required = false, defaultValue = "0") int cantidad) {
 
-        InventarioDTO resultado = inventarioService.procesarInventario(id, cantidad);
-
-        if (resultado == null){
-            return ResponseEntity.notFound().build();
-        }
+        InventarioDTO resultado = inventarioService.procesarInventario(codigo, cantidad);
+        if (resultado == null) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(resultado);
     }
 
-    @PostMapping
-    public ResponseEntity<Inventario> crear(@RequestBody Inventario inventario){
+    @PostMapping // Para crear inventario nuevo
+    public ResponseEntity<Inventario> crear(@Valid @RequestBody Inventario inventario){
         return new ResponseEntity<>(inventarioService.save(inventario), HttpStatus.CREATED);
     }
 }

@@ -15,16 +15,27 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        if (notificacionRepository.count()== 0){
-            Notificacion n1 = new Notificacion(null,"TRK-123456", "DESPACHADO", "En centro de distribución", "pedro@gmail.com");
-            Notificacion n2 = new Notificacion(null,"TRK-681357", "DESPACHADO", "En proceso de despacho", "matias@hotmail.com");
-            Notificacion n3 = new Notificacion(null,"TRK-181636", "DESPACHADO", "Llegando al destiuno", "byron@gmail.com");
+        if (notificacionRepository.count() == 0) {
 
-            notificacionRepository.save(n1);
-            notificacionRepository.save(n2);
-            notificacionRepository.save(n3);
+            notificacionRepository.save(Notificacion.builder()
+                    .codSeguimiento("TRK-123456")
+                    .estadoEnv("DESPACHADO")
+                    .emailNotificacion("pedro@gmail.com")
+                    .build());
 
+            notificacionRepository.save(Notificacion.builder()
+                    .codSeguimiento("TRK-681357")
+                    .estadoEnv("DESPACHADO")
+                    .emailNotificacion("matias@hotmail.com")
+                    .build());
 
+            notificacionRepository.save(Notificacion.builder()
+                    .codSeguimiento("TRK-181636")
+                    .estadoEnv("DESPACHADO")
+                    .emailNotificacion("byron@gmail.com")
+                    .build());
+
+            System.out.println("--- Notificaciones cargadas exitosamente ---");
         }
     }
 }

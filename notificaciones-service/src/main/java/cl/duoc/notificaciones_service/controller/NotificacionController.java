@@ -3,6 +3,7 @@ package cl.duoc.notificaciones_service.controller;
 import cl.duoc.notificaciones_service.dto.NotificacionDTO;
 import cl.duoc.notificaciones_service.model.Notificacion;
 import cl.duoc.notificaciones_service.service.NotificacionService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,7 @@ public class NotificacionController {
     }
 
     @PostMapping
-    public ResponseEntity<?> registrar(@RequestBody Notificacion notificacion){
+    public ResponseEntity<?> registrar(@Valid @RequestBody Notificacion notificacion){
         Notificacion notifNueva = notificacionService.save(notificacion);
         return new ResponseEntity<>(notifNueva, HttpStatus.CREATED);
     }

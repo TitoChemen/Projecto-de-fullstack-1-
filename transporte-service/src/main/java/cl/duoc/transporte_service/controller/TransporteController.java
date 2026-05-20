@@ -2,6 +2,7 @@ package cl.duoc.transporte_service.controller;
 
 import cl.duoc.transporte_service.dto.TransporteDTO;
 import cl.duoc.transporte_service.service.TransporteService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +30,7 @@ public class TransporteController {
     }
 
     @PostMapping
-    public ResponseEntity<?> registrar(@RequestBody TransporteDTO transporteDTO) {
+    public ResponseEntity<?> registrar(@Valid @RequestBody TransporteDTO transporteDTO) {
         TransporteDTO transporteNuevo = transporteService.save(transporteDTO);
         return new ResponseEntity<>(transporteNuevo, HttpStatus.CREATED);
     }

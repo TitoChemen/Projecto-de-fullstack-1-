@@ -6,13 +6,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class NotificacionMapper {
-    public NotificacionDTO toDTO(Notificacion notificacion){
-        if (notificacion == null) return null;
+    public NotificacionDTO toDTO(Notificacion n){
+        if (n == null) return null;
         NotificacionDTO dto = new NotificacionDTO();
-        dto.setEmailNotificacion(notificacion.getEmailNotificacion()+
-                notificacion.getCodSeguimiento()+
-                notificacion.getRastreo()+
-                notificacion.getEstadoEnv());
+        dto.setCodSeguimiento(n.getCodSeguimiento());
+        dto.setEstadoEnv(n.getEstadoEnv());
+        dto.setEmailNotificacion(n.getEmailNotificacion());
         return dto;
     }
 }

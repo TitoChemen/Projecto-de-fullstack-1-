@@ -3,6 +3,7 @@ package cl.duoc.carrito_service.controller;
 import cl.duoc.carrito_service.dto.CarritoDTO;
 import cl.duoc.carrito_service.model.Carrito;
 import cl.duoc.carrito_service.service.CarritoService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,7 @@ public class CarritoController {
     }
 
     @PostMapping
-    public ResponseEntity<?> registrar(@RequestBody Carrito carrito){
+    public ResponseEntity<?> registrar(@Valid @RequestBody Carrito carrito){
         Carrito carritoNuevo = carritoService.save(carrito);
         return new ResponseEntity<>(carritoNuevo, HttpStatus.CREATED);
     }

@@ -10,7 +10,7 @@
         <module name="Api-Gateway" />
         <module name="config-server" />
       </profile>
-      <profile name="Annotation profile for usuario-service" enabled="true">
+      <profile name="Annotation profile for producto-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -19,7 +19,7 @@
         </processorPath>
         <module name="usuario-service" />
         <module name="notificaciones-service" />
-        <module name="descuentos-service" />
+        <module name="producto-service" />
         <module name="pagos-service" />
         <module name="facturaciones-service" />
         <module name="Eureka-Server" />
@@ -28,6 +28,9 @@
         <module name="carrito-service" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="descuentos-service" target="25" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
@@ -40,6 +43,7 @@
       <module name="inventario-service" options="-parameters" />
       <module name="notificaciones-service" options="-parameters" />
       <module name="pagos-service" options="-parameters" />
+      <module name="producto-service" options="-parameters" />
       <module name="transporte-service" options="-parameters" />
       <module name="usuario-service" options="-parameters" />
     </option>

@@ -3,8 +3,6 @@
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/carrito-service/src/main/resources/migration/V1__creacion_tabla_carritos.sql" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/carrito-service/src/main/resources/migration/V2__datos_de_prueba.sql" dialect="GenericSQL" />
-    <file url="file://$PROJECT_DIR$/descuentos-service/src/main/resources/db.migration/V1__creacion_tabla_descuentos.sql" dialect="GenericSQL" />
-    <file url="file://$PROJECT_DIR$/descuentos-service/src/main/resources/db.migration/V2__datos_de_prueba.sql" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/facturaciones-service/src/main/resources/migration/V1__creacion_tabla_facturaciones.sql" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/facturaciones-service/src/main/resources/migration/V2__datos_de_prueba.sql" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/inventario-service/src/main/resources/migration/V1__creacion_tabla_inventario.sql" dialect="GenericSQL" />

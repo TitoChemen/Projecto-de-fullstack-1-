@@ -2,7 +2,6 @@ package cl.duoc.pagos_service.service;
 
 
 import cl.duoc.pagos_service.dto.*;
-import cl.duoc.pagos_service.feign.DescuentoFeign;
 import cl.duoc.pagos_service.feign.FacturacionFeign;
 import cl.duoc.pagos_service.feign.NotificacionFeign;
 import cl.duoc.pagos_service.feign.TransporteFeign;
@@ -25,8 +24,6 @@ public class PagoService {
     @Autowired
     private TransporteFeign transporteFeign;
     @Autowired
-    private DescuentoFeign descuentoFeign;
-    @Autowired
     private NotificacionFeign notificacionFeign;
 
     public List<Pago> findAll(){
@@ -38,48 +35,43 @@ public class PagoService {
         return pagoMapper.toDTO(pago);
     }
 
-    public Pago save(Pago p){
-        // 1 calculamos el descuento primero
-        String codigoPrueba = "DESC10";
-        DescuentoDTO resultado = descuentoFeign.validarDescuento(codigoPrueba);
-        // 2 si el descuento es valido y esta activo se aplica la resta
-        if (resultado != null && resultado.isActivo()) {
-            //hacemos las mates xd
-            double porcentaje = resultado.getPorcentaje() / 100.0;
-            // Usamos double para el cálculo y luego volvemos a Integer
-            double descuento = p.getMontoPago().doubleValue() * porcentaje;
-            int montoFinal = (int) (p.getMontoPago() - descuento);
+    public Pago save(Pago p) {
+        // 1. Lógica de Descuento (Sin llamadas externas, pura lógica de negocio)
+        double montoOriginal = p.getMontoPago().doubleValue();
+        double descuento = 0.0;
 
-            //actualizamos el monto antes de guardar en la bd
-            p.setMontoPago(montoFinal);
+        // Ejemplo: Si el pago supera 100.000, aplicamos un 10% de descuento
+        if (montoOriginal > 100000) {
+            descuento = montoOriginal * 0.10;
         }
 
+        // Calculamos y actualizamos el objeto Pago antes de guardarlo
+        int montoFinal = (int) (montoOriginal - descuento);
+        p.setMontoPago(montoFinal);
+
+        // 2. Ahora guardamos el pago YA DESCONTADO
         Pago pagoGuardado = pagoRepository.save(p);
 
+        // 3. Facturación (Ahora recibe el monto ya descontado)
         FacturacionDTO factura = new FacturacionDTO();
         factura.setIdPago(pagoGuardado.getId());
         factura.setMonto(pagoGuardado.getMontoPago().doubleValue());
-        factura.setDetalle("Pago realizado con" + pagoGuardado.getMetodoPago());
+        factura.setDetalle("Pago realizado con " + pagoGuardado.getMetodoPago() + " (Descuento aplicado)");
         facturacionFeign.crearFactura(factura);
 
-        //transportes
+        // 4. Transporte
         TransporteDTO despacho = new TransporteDTO();
         despacho.setIdPago(pagoGuardado.getId());
         despacho.setEstado("Preparando_Despacho");
         transporteFeign.crearOrdenDespacho(despacho);
 
-        //notificaciones
+        // 5. Notificaciones
         NotificacionDTO noti = new NotificacionDTO();
-
-        //usemos el id del pago
         noti.setCodSeguimiento("SEG-" + pagoGuardado.getId());
-
-        //le pasamos el estado q ya conocemos evidentemente xd
         noti.setEstadoEnv("Pago_Confirmado_Y_Procesado");
-
-        //aqui podrias poner un mail para la prueba
         noti.setEmailNotificacion("cliente@correo.cl");
         notificacionFeign.enviarNotificacion(noti);
+
         return pagoGuardado;
     }
 

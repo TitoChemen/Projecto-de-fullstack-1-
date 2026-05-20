@@ -6,14 +6,21 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class TransporteMapper {
-    public TransporteDTO toDTO(Transporte transporte){
-        if (transporte == null) return null;
+    public TransporteDTO toDTO(Transporte t) {
+        if (t == null) return null;
         TransporteDTO dto = new TransporteDTO();
-        dto.setRuta(transporte.getDirecDestino());
+        dto.setDireccion(t.getDirecDestino());
+        dto.setRuta(t.getEmpresaTransporte()); // O lo que prefieras mostrar
+        dto.setEstado("En camino"); // Aquí podrías mapear el estado real
         return dto;
     }
 
     public Transporte toEntity(TransporteDTO dto) {
-        return null;
+        if (dto == null) return null;
+        Transporte t = new Transporte();
+        t.setDirecDestino(dto.getDireccion());
+        // Aquí podrías asignar valores por defecto o dejar campos vacíos
+        t.setEmpresaTransporte("Chilexpress por defecto");
+        return t;
     }
 }
