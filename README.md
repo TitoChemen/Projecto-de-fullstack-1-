@@ -1,36 +1,30 @@
-# Projecto-de-fullstack-1-
+# 🚀 Sistema de Gestión de Microservicios - Proyecto Fullstack
 
-# 🚀 Sistema de Gestión de Microservicios - Proyecto Fullstack (DUOC)
+Proyecto desarrollado como parte de la formación en IT en el DUOC. Este sistema implementa una arquitectura robusta de **microservicios** para la gestión integral de ventas, catálogo de productos y usuarios.
 
-Bienvenido al repositorio del proyecto final. Este sistema implementa una arquitectura de **microservicios** para la gestión integral de ventas y productos.
+## 👥 Equipo de Desarrollo
+* **Kevin Sosa**
+* **Jaime [Apellido de tu compañero]**
 
 ## 🏗️ Estructura del Proyecto
-El proyecto está organizado en múltiples servicios independientes que se comunican entre sí:
-
-* **Eureka-Server**: Service Discovery para el registro y localización de servicios.
-* **Api-Gateway**: Punto de entrada centralizado para gestionar las rutas al puerto 9000.
-* **Microservicios**:
-    * `usuario-service`: Gestión de clientes.
-    * `producto-service`: Catálogo y gestión de productos.
-    * `carrito-service`: Orquestación de compras.
-    * `pagos-service`, `facturaciones-service`, `inventario-service`, `transporte-service`, `notificaciones-service`.
+El sistema está compuesto por servicios independientes comunicados vía **Spring Cloud**:
+* **Eureka-Server**: Service Discovery.
+* **Api-Gateway**: Punto de entrada centralizado (Puerto 9000).
+* **Microservicios**: `usuario-service`, `producto-service`, `carrito-service`, `pagos-service`, `facturaciones-service`, `inventario-service`, `transporte-service`, `notificaciones-service`.
 
 ## ⚙️ Tecnologías Utilizadas
-* **Java 17** con **Spring Boot**.
-* **Spring Cloud** (Netflix Eureka, Gateway, OpenFeign).
+* **Java 25** con **Spring Boot**.
+* **Spring Cloud** (Eureka, Gateway, OpenFeign).
 * **JPA/Hibernate** con base de datos **MySQL**.
 * **Lombok** para optimización de código.
 
 ## 🚀 Guía de Inicio (Orden de ejecución)
-Para levantar el ecosistema, sigue este orden estrictamente:
-1. `Eureka-Server` (Esperar a que inicie).
-2. `Api-Gateway`.
-3. Microservicios restantes.
+1. Iniciar **Eureka-Server**.
+2. Iniciar **Api-Gateway**.
+3. Iniciar los microservicios restantes.
 
-## 📡 Endpoints principales (Ejemplos)
+## 📡 Endpoints principales
 * **Listar productos**: `GET http://localhost:9000/api/v1/productos`
 * **Crear producto**: `POST http://localhost:9000/api/v1/productos`
-
 ---
-*Desarrollado por Kevin - Alumno de DUOC.*
-*Desarrollado por Jaime - Alumno de DUOC.*
+> "Lo único que importa es ganar." — Inspirado por Harvey Specter, pero construido con el código de Kevin y Jaime.
