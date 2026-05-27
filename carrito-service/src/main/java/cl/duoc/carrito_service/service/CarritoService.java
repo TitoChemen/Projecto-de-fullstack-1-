@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CarritoService {
@@ -25,97 +26,72 @@ public class CarritoService {
     private InventarioFeign inventarioFeign;
 
     public List<CarritoDTO> findAll() {
-        return carritoRepository.findAll().stream().map(carrito -> {
-            CarritoDTO dto = new CarritoDTO();
-            dto.setIdCarrito(carrito.getId());
-            dto.setCantidad(carrito.getCantidad());
-            dto.setPrecioUnitario(carrito.getPrecioUnitario());
-            dto.setTotalBruto(carrito.getCantidad() * carrito.getPrecioUnitario());
-
-            // Reutilizamos la lógica de buscar datos para cada carrito
-            try {
-                UsuarioDTO user = usuarioFeign.buscarPorID(carrito.getIdUsuario());
-                dto.setNombreCliente(user != null ? user.getNombre() + " " + user.getApellido() : "Desc");
-            } catch (Exception e) { dto.setNombreCliente("Error"); }
-
-            try {
-                InventarioDTO inv = inventarioFeign.buscarPorId(carrito.getCodigoProducto(), carrito.getCantidad());
-                dto.setNombreProducto(inv != null ? inv.getNombre() : "Producto sin nombre");
-            } catch (Exception e) { dto.setNombreProducto("Error"); }
-
-            return dto;
-        }).toList();
+        return carritoRepository.findAll().stream().map(this::mapToDTO).collect(Collectors.toList());
     }
 
-    public CarritoDTO findById(Long id){
-        Carrito carrito = carritoRepository.findById(id).orElse(null);
-        if (carrito == null) return null;
+    public CarritoDTO findById(Long id) {
+        return carritoRepository.findById(id).map(this::mapToDTO).orElse(null);
+    }
 
+    // Método privado para evitar repetir código y manejar errores centralizados
+    private CarritoDTO mapToDTO(Carrito carrito) {
         CarritoDTO dto = new CarritoDTO();
         dto.setIdCarrito(carrito.getId());
         dto.setCantidad(carrito.getCantidad());
         dto.setPrecioUnitario(carrito.getPrecioUnitario());
         dto.setTotalBruto(carrito.getCantidad() * carrito.getPrecioUnitario());
 
+        // Buscar Usuario
         try {
             UsuarioDTO user = usuarioFeign.buscarPorID(carrito.getIdUsuario());
-            if (user != null) {
-                dto.setNombreCliente(user.getNombre() + " " + user.getApellido());
-                dto.setCorreoCliente(user.getEmail());
-            } else {
-                dto.setNombreCliente("Usuario Desconocido");
-                dto.setCorreoCliente("Sin correo");
-            }
+            dto.setNombreCliente(user != null ? user.getNombre() + " " + user.getApellido() : "Usuario no encontrado");
+            dto.setCorreoCliente(user != null ? user.getEmail() : "Sin correo");
         } catch (Exception e) {
-            dto.setNombreCliente("Servicio de usuarios caído");
-            dto.setCorreoCliente("Desconocido");
+            System.err.println("Error llamando a UsuarioFeign: " + e.getMessage());
+            e.printStackTrace();
+            dto.setNombreCliente("Error en servicio Usuario");
         }
 
-        // Vamos a buscar el nombre del producto al Inventario
+        // Buscar Producto
         try {
             InventarioDTO inv = inventarioFeign.buscarPorId(carrito.getCodigoProducto(), carrito.getCantidad());
-            if (inv != null && inv.getNombre() != null) {
-                dto.setNombreProducto(inv.getNombre());
-            } else {
-                dto.setNombreProducto("Producto sin nombre");
-            }
+            dto.setNombreProducto(inv != null ? inv.getNombre() : "Producto no encontrado");
         } catch (Exception e) {
-            // Si el inventario no responde, le ponemos esto para que no se caiga
-            dto.setNombreProducto("Servicio de inventario caído");
+            System.err.println("Error llamando a InventarioFeign: " + e.getMessage());
+            e.printStackTrace();
+            dto.setNombreProducto("Error en servicio Inventario");
         }
 
         return dto;
     }
 
-    public Carrito save(Carrito c){
-        // Pegamos al puerto 8080 (Usuario)
+    public Carrito save(Carrito c) {
+        // Validar usuario
         UsuarioDTO user = usuarioFeign.buscarPorID(c.getIdUsuario());
         if (user == null) {
-            throw new RuntimeException("Usuario no existe en la base de datos");
+            throw new RuntimeException("Usuario no existe: " + c.getIdUsuario());
         }
 
-        // Pegamos al puerto 8083 (Inventario)
+        // Validar stock
         InventarioDTO inv = inventarioFeign.buscarPorId(c.getCodigoProducto(), c.getCantidad());
-
-        if (inv == null || inv.getStock() < c.getCantidad()) {
-            throw new RuntimeException("No hay stock suficiente. Revisa el inventario.");
+        if (inv == null) {
+            throw new RuntimeException("Producto no encontrado o error en inventario.");
         }
 
         return carritoRepository.save(c);
     }
 
-    public void delete(Long id){
+    public void delete(Long id) {
         carritoRepository.deleteById(id);
     }
 
-    public Carrito update(Long id, Carrito carrito){
-        Carrito carritoActualizar = carritoRepository.findById(id).orElse(null);
-        if (carritoActualizar == null) return null;
-        carritoActualizar.setCantidad(carrito.getCantidad());
-        carritoActualizar.setCodigoProducto(carrito.getCodigoProducto());
-        carritoActualizar.setPrecioUnitario(carrito.getPrecioUnitario());
-        carritoActualizar.setIdUsuario(carrito.getIdUsuario());
-
-        return carritoRepository.save(carritoActualizar);
+    public Carrito update(Long id, Carrito carrito) {
+        return carritoRepository.findById(id).map(c -> {
+            c.setCantidad(carrito.getCantidad());
+            c.setCodigoProducto(carrito.getCodigoProducto());
+            c.setPrecioUnitario(carrito.getPrecioUnitario());
+            c.setIdUsuario(carrito.getIdUsuario());
+            return carritoRepository.save(c);
+        }).orElse(null);
     }
 }

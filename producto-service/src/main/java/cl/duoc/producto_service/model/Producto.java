@@ -29,6 +29,6 @@ public class Producto {
     private Integer stock;
 
     @ManyToOne
-    @JoinColumn(name = "categoria_id")
+    @JoinColumn(name = "categoria_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Categoria categoria;
 }

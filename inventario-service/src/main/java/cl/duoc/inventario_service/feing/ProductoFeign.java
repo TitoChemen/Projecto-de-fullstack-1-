@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @FeignClient(name = "producto-service")
 public interface ProductoFeign {
-    @GetMapping("/api/v1/productos/{codigo}")
-    ProductoDTO obtenerDetalleProducto(@PathVariable("codigo") String codigo); // <--- CAMBIA OBJECT POR PRODUCTODTO
+    @GetMapping("/{codigo}")
+    ProductoDTO obtenerDetalleProducto(@PathVariable("codigo") String codigo);
 }

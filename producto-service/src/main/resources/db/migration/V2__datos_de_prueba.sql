@@ -1,13 +1,14 @@
--- V2__datos_de_prueba.sql
+-- src/main/resources/db/migration/V2__datos_de_prueba.sql
 
--- Insertar categorías iniciales
-INSERT INTO categoria (nombre) VALUES
-    ('Gamer'),
-    ('Audio y Accesorios'),
-    ('Componentes');
+-- Insertar categorías
+INSERT INTO categoria (id, nombre) VALUES
+                                       (1, 'Gamer'),
+                                       (2, 'Periféricos')
+ON DUPLICATE KEY UPDATE nombre=nombre;
 
--- Insertar productos de prueba
+-- Insertar productos
 INSERT INTO productos (codigo, nombre, precio, stock, categoria_id) VALUES
-    ('AUD-001', 'Audífonos Over-Ear Blik Soul 900', 35000.0, 10, 2),
-    ('TEC-001', 'Teclado Mecánico RGB', 45000.0, 15, 1),
-    ('MON-001', 'Monitor 144Hz 24 pulgadas', 150000.0, 5, 1);
+                                                                        ('8465S', 'Monitor Gamer 144Hz', 150000.0, 50, 1),
+                                                                        ('3255S', 'Teclado Mecánico RGB', 45000.0, 100, 2),
+                                                                        ('4235S', 'Mouse Inalámbrico Pro', 25000.0, 75, 2)
+ON DUPLICATE KEY UPDATE nombre=nombre;
