@@ -28,19 +28,17 @@ public class CarritoService {
         return carritoRepository.findAll();
     }
 
-    // 🔥 EL CAMBIO MAESTRO: Orquestación de datos para la vitrina 🔥
+
     public CarritoDTO findById(Long id){
         Carrito carrito = carritoRepository.findById(id).orElse(null);
         if (carrito == null) return null;
 
         CarritoDTO dto = new CarritoDTO();
         dto.setIdCarrito(carrito.getId());
-        dto.setCodigoProducto(carrito.getCodigoProducto());
         dto.setCantidad(carrito.getCantidad());
         dto.setPrecioUnitario(carrito.getPrecioUnitario());
         dto.setTotalBruto(carrito.getCantidad() * carrito.getPrecioUnitario());
 
-        // Vamos a buscar quién es el cliente al otro microservicio
         try {
             UsuarioDTO user = usuarioFeign.buscarPorID(carrito.getIdUsuario());
             if (user != null) {
@@ -51,9 +49,21 @@ public class CarritoService {
                 dto.setCorreoCliente("Sin correo");
             }
         } catch (Exception e) {
-            // Si el servicio de usuarios está apagado, no se cae todo el programa
             dto.setNombreCliente("Servicio de usuarios caído");
             dto.setCorreoCliente("Desconocido");
+        }
+
+        // Vamos a buscar el nombre del producto al Inventario
+        try {
+            InventarioDTO inv = inventarioFeign.buscarPorId(carrito.getCodigoProducto(), carrito.getCantidad());
+            if (inv != null && inv.getNombre() != null) {
+                dto.setNombreProducto(inv.getNombre());
+            } else {
+                dto.setNombreProducto("Producto sin nombre");
+            }
+        } catch (Exception e) {
+            // Si el inventario no responde, le ponemos esto para que no se caiga
+            dto.setNombreProducto("Servicio de inventario caído");
         }
 
         return dto;
