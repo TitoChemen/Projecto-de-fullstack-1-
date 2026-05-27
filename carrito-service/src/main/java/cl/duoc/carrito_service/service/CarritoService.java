@@ -24,10 +24,28 @@ public class CarritoService {
     @Autowired
     private InventarioFeign inventarioFeign;
 
-    public List<Carrito> findAll(){
-        return carritoRepository.findAll();
-    }
+    public List<CarritoDTO> findAll() {
+        return carritoRepository.findAll().stream().map(carrito -> {
+            CarritoDTO dto = new CarritoDTO();
+            dto.setIdCarrito(carrito.getId());
+            dto.setCantidad(carrito.getCantidad());
+            dto.setPrecioUnitario(carrito.getPrecioUnitario());
+            dto.setTotalBruto(carrito.getCantidad() * carrito.getPrecioUnitario());
 
+            // Reutilizamos la lógica de buscar datos para cada carrito
+            try {
+                UsuarioDTO user = usuarioFeign.buscarPorID(carrito.getIdUsuario());
+                dto.setNombreCliente(user != null ? user.getNombre() + " " + user.getApellido() : "Desc");
+            } catch (Exception e) { dto.setNombreCliente("Error"); }
+
+            try {
+                InventarioDTO inv = inventarioFeign.buscarPorId(carrito.getCodigoProducto(), carrito.getCantidad());
+                dto.setNombreProducto(inv != null ? inv.getNombre() : "Producto sin nombre");
+            } catch (Exception e) { dto.setNombreProducto("Error"); }
+
+            return dto;
+        }).toList();
+    }
 
     public CarritoDTO findById(Long id){
         Carrito carrito = carritoRepository.findById(id).orElse(null);

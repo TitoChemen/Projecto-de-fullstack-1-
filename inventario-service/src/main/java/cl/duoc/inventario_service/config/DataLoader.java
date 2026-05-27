@@ -30,7 +30,12 @@ public class DataLoader implements CommandLineRunner {
                     .pasilloBodega("Pasillo B-12")
                     .estadoStock("AGOTADO") // Cambié "SIN_STROCK" por "AGOTADO" para que pase tu @Pattern
                     .build());
-
+            inventarioRepository.save(Inventario.builder()
+                    .codigoProducto("4235S")
+                    .stockDisponible(10)
+                    .pasilloBodega("Pasillo C-10")
+                    .estadoStock("DISPONIBLE")
+                    .build());
             // ... repite para los otros ...
 
             System.out.println("--- Inventario cargado exitosamente ---");

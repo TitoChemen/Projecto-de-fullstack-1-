@@ -17,6 +17,7 @@ public class CarritoController {
 
     @GetMapping
     public ResponseEntity<?> listar(){
+        // Aquí el service ahora devuelve List<CarritoDTO>
         return ResponseEntity.ok(carritoService.findAll());
     }
 
@@ -29,10 +30,10 @@ public class CarritoController {
 
     @PostMapping
     public ResponseEntity<?> registrar(@Valid @RequestBody Carrito carrito){
+        // El POST sigue devolviendo el Carrito guardado, está bien así
         Carrito carritoNuevo = carritoService.save(carrito);
         return new ResponseEntity<>(carritoNuevo, HttpStatus.CREATED);
     }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<?> borrar(@PathVariable Long id){
         carritoService.delete(id);
