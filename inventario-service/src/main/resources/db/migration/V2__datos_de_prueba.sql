@@ -1,5 +1,6 @@
-INSERT INTO inventario (stock_disponible, pasillo_bodega, estado_stock, id_carrito)
-VALUES (50, 'Pasillo A-12', 'DISPONIBLE', null),
-       (0, 'Pasillo b-12', 'SIN_STROCK', null),
-       (21, 'Pasillo A-2', 'DISPONIBLE', null),
-       (89, 'Pasillo c-4', 'DISPONIBLE', null);
+INSERT INTO inventario (codigo_producto, stock_disponible, pasillo_bodega, estado_stock)
+VALUES
+    ('PROD-001', 50, 'Pasillo A-12', 'DISPONIBLE'),
+    ('PROD-002', 0, 'Pasillo b-12', 'AGOTADO'),
+    ('PROD-003', 21, 'Pasillo A-2', 'DISPONIBLE'),
+    ('PROD-004', 89, 'Pasillo c-4', 'DISPONIBLE');
