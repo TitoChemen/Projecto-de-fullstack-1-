@@ -23,6 +23,9 @@ public class Facturacion {
     @NotNull(message = "El idPago es obligatorio")
     private Long idPago;
 
+    @NotNull(message = "El idUsuario es obligatorio")
+    private Long idUsuario;
+
     @DecimalMin(value = "0.01", message = "El monto debe ser mayor a cero")
     private Double monto;
 

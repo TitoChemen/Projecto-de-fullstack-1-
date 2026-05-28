@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface FacturacionRepository extends JpaRepository<Facturacion, Long> {
+    ScopedValue<Object> findByIdPago(Long idPago);
 }
