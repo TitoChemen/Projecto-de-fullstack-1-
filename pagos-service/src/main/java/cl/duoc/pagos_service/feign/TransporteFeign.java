@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @FeignClient(name = "transporte-service")
 public interface TransporteFeign {
 
-    @PostMapping("/api/v1/transporte")
+    // FALTABA LA 'S' AL FINAL DE TRANSPORTES
+    @PostMapping("/api/v1/transportes")
     TransporteDTO crearOrdenDespacho(@RequestBody TransporteDTO transporte);
 }

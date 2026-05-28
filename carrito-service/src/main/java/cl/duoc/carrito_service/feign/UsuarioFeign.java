@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @FeignClient(name = "usuario-service")
 public interface UsuarioFeign {
-    // Ponemos la ruta completa desde el principio
+    // Si tu Controller en usuario-service tiene @RequestMapping("/api/v1/usuario")
+    // y @GetMapping("/{id}"), esta es la ruta correcta:
     @GetMapping("/api/v1/usuario/{id}")
     UsuarioDTO buscarPorID(@PathVariable("id") Long id);
 }

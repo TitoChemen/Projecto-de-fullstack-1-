@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @FeignClient(name = "inventario-service")
 public interface InventarioFeign {
-    // Ponemos la ruta completa y el RequestParam bien mapeado
     @GetMapping("/api/v1/inventario/{codigo}")
-    InventarioDTO buscarPorId(@PathVariable("codigo") String codigo, @RequestParam("cantidad") Integer cantidad);
+    InventarioDTO buscarPorId(@PathVariable("codigo") String codigo, @RequestParam("cantidad") int cantidad);
 }

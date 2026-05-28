@@ -1,5 +1,5 @@
--- Datos de prueba opcionales para testear tu servicio
+-- Datos de prueba REALES para testear los servicios integrados
 INSERT INTO carrito (codigo_producto, cantidad, precio_unitario, usuario_id)
-VALUES ('PROD-1001', 2, 15000, 101),
-       ('PROD-2024', 1, 45000, 102),
-       ('PROD-5005', 5, 2500, 105);
+VALUES ('8465S', 1, 150000, 1),
+       ('3255S', 2, 45000, 2),
+       ('4235S', 1, 25000, 3);

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @FeignClient(name = "producto-service")
 public interface ProductoFeign {
-    @GetMapping("/{codigo}")
+    // FALTABA LA RUTA COMPLETA AQUÍ
+    @GetMapping("/api/v1/productos/{codigo}")
     ProductoDTO obtenerDetalleProducto(@PathVariable("codigo") String codigo);
 }

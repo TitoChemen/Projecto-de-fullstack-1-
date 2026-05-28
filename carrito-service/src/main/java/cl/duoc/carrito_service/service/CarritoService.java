@@ -33,7 +33,6 @@ public class CarritoService {
         return carritoRepository.findById(id).map(this::mapToDTO).orElse(null);
     }
 
-    // Método privado para evitar repetir código y manejar errores centralizados
     private CarritoDTO mapToDTO(Carrito carrito) {
         CarritoDTO dto = new CarritoDTO();
         dto.setIdCarrito(carrito.getId());
@@ -41,42 +40,25 @@ public class CarritoService {
         dto.setPrecioUnitario(carrito.getPrecioUnitario());
         dto.setTotalBruto(carrito.getCantidad() * carrito.getPrecioUnitario());
 
-        // Buscar Usuario
-        try {
-            UsuarioDTO user = usuarioFeign.buscarPorID(carrito.getIdUsuario());
-            dto.setNombreCliente(user != null ? user.getNombre() + " " + user.getApellido() : "Usuario no encontrado");
-            dto.setCorreoCliente(user != null ? user.getEmail() : "Sin correo");
-        } catch (Exception e) {
-            System.err.println("Error llamando a UsuarioFeign: " + e.getMessage());
-            e.printStackTrace();
-            dto.setNombreCliente("Error en servicio Usuario");
-        }
+        // Lógica de usuario
+        UsuarioDTO user = usuarioFeign.buscarPorID(carrito.getIdUsuario());
+        dto.setNombreCliente(user != null ? (user.getNombre() + " " + user.getApellido()) : "Usuario no encontrado");
+        dto.setCorreoCliente(user != null ? user.getEmail() : "Sin correo");
 
-        // Buscar Producto
-        try {
-            InventarioDTO inv = inventarioFeign.buscarPorId(carrito.getCodigoProducto(), carrito.getCantidad());
-            dto.setNombreProducto(inv != null ? inv.getNombre() : "Producto no encontrado");
-        } catch (Exception e) {
-            System.err.println("Error llamando a InventarioFeign: " + e.getMessage());
-            e.printStackTrace();
-            dto.setNombreProducto("Error en servicio Inventario");
-        }
+        // Lógica de inventario
+        InventarioDTO inv = inventarioFeign.buscarPorId(carrito.getCodigoProducto(), carrito.getCantidad());
+        dto.setNombreProducto(inv != null ? inv.getNombre() : "Producto no encontrado");
 
         return dto;
     }
 
     public Carrito save(Carrito c) {
-        // Validar usuario
+        // Validación antes de guardar
         UsuarioDTO user = usuarioFeign.buscarPorID(c.getIdUsuario());
-        if (user == null) {
-            throw new RuntimeException("Usuario no existe: " + c.getIdUsuario());
-        }
+        if (user == null) throw new RuntimeException("Usuario no existe");
 
-        // Validar stock
         InventarioDTO inv = inventarioFeign.buscarPorId(c.getCodigoProducto(), c.getCantidad());
-        if (inv == null) {
-            throw new RuntimeException("Producto no encontrado o error en inventario.");
-        }
+        if (inv == null) throw new RuntimeException("Producto no existe en inventario");
 
         return carritoRepository.save(c);
     }
