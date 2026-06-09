@@ -1,4 +1,4 @@
-package cl.duoc.Api_Gateway;
+package cl.duoc.api_gateway;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

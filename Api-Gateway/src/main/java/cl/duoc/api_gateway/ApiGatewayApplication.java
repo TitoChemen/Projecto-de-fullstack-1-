@@ -1,4 +1,4 @@
-package cl.duoc.Api_Gateway;
+package cl.duoc.api_gateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -7,7 +7,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Api-Gateway" />
+        <module name="api-gateway" />
         <module name="config-server" />
       </profile>
       <profile name="Annotation profile for usuario-service" enabled="true">
@@ -29,6 +29,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="Api-Gateway" target="25" />
       <module name="descuentos-service" target="25" />
     </bytecodeTargetLevel>
   </component>
@@ -36,6 +37,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="Api-Gateway" options="-parameters" />
       <module name="Eureka-Server" options="-parameters" />
+      <module name="api-gateway" options="-parameters" />
       <module name="carrito-service" options="-parameters" />
       <module name="config-server" options="-parameters" />
       <module name="descuentos-service" options="-parameters" />
