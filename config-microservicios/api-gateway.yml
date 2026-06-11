@@ -1,0 +1,52 @@
+server:
+  address: 0.0.0.0
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: usuario-service
+              uri: lb://usuario-service
+              predicates:
+                - Path=/api/v1/usuario/**
+            - id: carrito-service
+              uri: lb://carrito-service
+              predicates:
+                - Path=/api/v1/carritos/**
+            - id: inventario-service
+              uri: lb://inventario-service
+              predicates:
+                - Path=/api/v1/inventario/**
+            - id: pagos-service
+              uri: lb://pagos-service
+              predicates:
+                - Path=/api/v1/pagos/**
+            - id: facturaciones-service
+              uri: lb://facturaciones-service
+              predicates:
+                - Path=/api/v1/facturas/**
+            - id: transporte-service
+              uri: lb://transporte-service
+              predicates:
+                - Path=/api/v1/transportes/**
+            - id: producto-service
+              uri: lb://producto-service
+              predicates:
+                - Path=/api/v1/productos/**
+            - id: notificaciones-service
+              uri: lb://notificaciones-service
+              predicates:
+                - Path=/api/v1/notificaciones/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
