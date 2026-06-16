@@ -11,10 +11,10 @@ services:
       - ./init-db:/docker-entrypoint-initdb.d
       - mysql_data:/var/lib/mysql
 
-  Eureka-Server:
+  eureka:
     restart: always
     build:
-      context: ./eureka
+      context: ./Eureka-Server
       dockerfile: Dockerfile
     container_name: eureka
     ports:
@@ -42,10 +42,10 @@ services:
       eureka:
         condition: service_started
 
-  Api-Gateway:
+  api-gateway:
     restart: always
     build:
-      context: ./api-gateway
+      context: ./Api-Gateway
       dockerfile: Dockerfile
     container_name: api-gateway
     ports:
