@@ -10,4 +10,9 @@ spring:
     config:
       server:
         native:
-          search-locations: file:./config-microservicios
+          search-locations: ${CONFIG_SEARCH_LOCATIONS:file:./config-microservicios}
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE}
